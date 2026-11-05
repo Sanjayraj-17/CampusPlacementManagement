@@ -30,5 +30,6 @@ namespace CampusPlacementManagement.API.Data
         public DbSet<RecruitmentDrive> RecruitmentDrives { get; set; }
         public DbSet<InterviewRound> InterviewRounds { get; set; }
 
+        public DbSet<InterviewSchedule> InterviewSchedules { get; set; }
     }
 }
