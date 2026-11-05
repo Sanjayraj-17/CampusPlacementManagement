@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DTOs\Auth\" />
+    <Folder Include="DTOs\College\" />
+    <Folder Include="DTOs\Company\" />
+    <Folder Include="DTOs\CompanyHR\" />
+    <Folder Include="DTOs\Job\" />
+    <Folder Include="DTOs\Application\" />
+    <Folder Include="DTOs\Interview\" />
+    <Folder Include="DTOs\RecruitmentDrive\" />
+    <Folder Include="DTOs\Student\" />
+    <Folder Include="DTOs\PlacementOfficer\" />
+    <Folder Include="Models\" />
+    <Folder Include="Data\" />
+    <Folder Include="Enums\" />
+    <Folder Include="Middleware\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Authorization\" />
+    <Folder Include="Repositories\Intefaces\" />
+    <Folder Include="Repositories\Implementations\" />
+    <Folder Include="Services\Interfaces\" />
+    <Folder Include="Services\Implementations\" />
+  </ItemGroup>
+
+</Project>
