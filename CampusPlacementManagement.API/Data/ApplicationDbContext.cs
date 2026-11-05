@@ -40,6 +40,27 @@ namespace CampusPlacementManagement.API.Data
             base.OnModelCreating(modelBuilder);
 
             // ==========================================
+            // PRIMARY KEY CONFIGURATIONS
+            // ==========================================
+
+            // JobOpening Primary Key
+            modelBuilder.Entity<JobOpening>()
+                .HasKey(j => j.JobId);
+
+            // JobApplication Primary Key
+            modelBuilder.Entity<JobApplication>()
+                .HasKey(a => a.ApplicationId);
+
+            // RecruitmentDrive Primary Key
+            modelBuilder.Entity<RecruitmentDrive>()
+                .HasKey(r => r.DriveId);
+
+            // ApplicationStatusHistory Primary Key
+            modelBuilder.Entity<ApplicationStatusHistory>()
+                .HasKey(h => h.HistoryId);
+
+
+            // ==========================================
             // 1. COLLEGE CONFIGURATION
             // ==========================================
 
