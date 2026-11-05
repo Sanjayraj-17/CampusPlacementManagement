@@ -13,75 +13,45 @@ namespace CampusPlacementManagement.API.Data
         {
         }
 
-        // ==========================================
         // COLLEGE AND USER MANAGEMENT
-        // ==========================================
-
         public DbSet<College> Colleges { get; set; }
-
         public DbSet<PlacementOfficer> PlacementOfficers { get; set; }
-
         public DbSet<Company> Companies { get; set; }
-
         public DbSet<CompanyHR> CompanyHRs { get; set; }
-
         public DbSet<Student> Students { get; set; }
 
-
-        // ==========================================
         // JOB MANAGEMENT
-        // ==========================================
-
         public DbSet<JobOpening> JobOpenings { get; set; }
-
         public DbSet<JobTargetCollege> JobTargetColleges { get; set; }
-
         public DbSet<JobEligibleDepartment> JobEligibleDepartments { get; set; }
-
         public DbSet<JobEligibleGraduationYear> JobEligibleGraduationYears { get; set; }
 
-
-        // ==========================================
         // APPLICATION MANAGEMENT
-        // ==========================================
-
         public DbSet<JobApplication> JobApplications { get; set; }
-
         public DbSet<ApplicationStatusHistory> ApplicationStatusHistories { get; set; }
 
-
-        // ==========================================
         // RECRUITMENT MANAGEMENT
-        // ==========================================
-
         public DbSet<RecruitmentDrive> RecruitmentDrives { get; set; }
-
         public DbSet<InterviewRound> InterviewRounds { get; set; }
-
         public DbSet<InterviewSchedule> InterviewSchedules { get; set; }
-
-
-        // ==========================================
-        // FLUENT API CONFIGURATION
-        // ==========================================
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Preserve ASP.NET Core Identity configuration
             base.OnModelCreating(modelBuilder);
 
-
             // ==========================================
-            // COLLEGE CONFIGURATION
+            // 1. COLLEGE CONFIGURATION
             // ==========================================
 
-            // CollegeCode must be unique
             modelBuilder.Entity<College>()
                 .HasIndex(c => c.CollegeCode)
                 .IsUnique();
 
 
-            // ApplicationUser - PlacementOfficer (1:1)
+            // ==========================================
+            // 2. USER AND PLACEMENT OFFICER (1:1)
+            // ==========================================
+
             modelBuilder.Entity<PlacementOfficer>()
                 .HasOne(p => p.User)
                 .WithOne()
@@ -90,7 +60,10 @@ namespace CampusPlacementManagement.API.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
 
-            // ApplicationUser - CompanyHR (1:1)
+            // ==========================================
+            // 3. USER AND COMPANY HR (1:1)
+            // ==========================================
+
             modelBuilder.Entity<CompanyHR>()
                 .HasOne(h => h.User)
                 .WithOne()
@@ -99,7 +72,10 @@ namespace CampusPlacementManagement.API.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
 
-            // ApplicationUser - Student (1:1)
+            // ==========================================
+            // 4. USER AND STUDENT (1:1)
+            // ==========================================
+
             modelBuilder.Entity<Student>()
                 .HasOne(s => s.User)
                 .WithOne()
@@ -107,7 +83,10 @@ namespace CampusPlacementManagement.API.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // College - PlacementOfficer (One-to-Many)
+
+            // ==========================================
+            // 5. COLLEGE AND PLACEMENT OFFICER (1:M)
+            // ==========================================
 
             modelBuilder.Entity<PlacementOfficer>()
                 .HasOne(p => p.College)
@@ -116,7 +95,10 @@ namespace CampusPlacementManagement.API.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // College - Student (One-to-Many)
+
+            // ==========================================
+            // 6. COLLEGE AND STUDENT (1:M)
+            // ==========================================
 
             modelBuilder.Entity<Student>()
                 .HasOne(s => s.College)
@@ -125,7 +107,10 @@ namespace CampusPlacementManagement.API.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // PlacementOfficer - Student (One-to-Many)
+
+            // ==========================================
+            // 7. PLACEMENT OFFICER AND STUDENT (1:M)
+            // ==========================================
 
             modelBuilder.Entity<Student>()
                 .HasOne(s => s.PlacementOfficer)
@@ -134,17 +119,17 @@ namespace CampusPlacementManagement.API.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Student - Unique RegisterNumber within College
 
+            // Unique Register Number within a College
             modelBuilder.Entity<Student>()
                 .HasIndex(s => new { s.CollegeId, s.RegisterNumber })
                 .IsUnique();
 
+
             // ==========================================
-            // COMPANY RELATIONSHIPS
+            // 8. COMPANY AND COMPANY HR (1:M)
             // ==========================================
 
-            // Company - CompanyHR (One-to-Many)
             modelBuilder.Entity<CompanyHR>()
                 .HasOne(h => h.Company)
                 .WithMany()
@@ -152,28 +137,32 @@ namespace CampusPlacementManagement.API.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // CompanyHR - ApprovedBy ApplicationUser
+
+            // ==========================================
+            // 9. COMPANY HR APPROVED BY USER
+            // ==========================================
+
             modelBuilder.Entity<CompanyHR>()
                 .HasOne(h => h.ApprovedByUser)
                 .WithMany()
                 .HasForeignKey(h => h.ApprovedBy)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // CompanyHR - ApprovedBy ApplicationUser
-            modelBuilder.Entity<CompanyHR>()
-                .HasOne(h => h.ApprovedByUser)
-                .WithMany()
-                .HasForeignKey(h => h.ApprovedBy)
-                .OnDelete(DeleteBehavior.Restrict);
 
-            // PlacementOfficer - ApprovedBy ApplicationUser
+            // ==========================================
+            // 10. PLACEMENT OFFICER APPROVED BY USER
+            // ==========================================
+
             modelBuilder.Entity<PlacementOfficer>()
                 .HasOne(p => p.ApprovedByUser)
                 .WithMany()
                 .HasForeignKey(p => p.ApprovedBy)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Company - JobOpening (One-to-Many)
+
+            // ==========================================
+            // 11. COMPANY AND JOB OPENING (1:M)
+            // ==========================================
 
             modelBuilder.Entity<JobOpening>()
                 .HasOne(j => j.Company)
@@ -182,7 +171,10 @@ namespace CampusPlacementManagement.API.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // CompanyHR - JobOpening (One-to-Many)
+
+            // ==========================================
+            // 12. COMPANY HR AND JOB OPENING (1:M)
+            // ==========================================
 
             modelBuilder.Entity<JobOpening>()
                 .HasOne(j => j.CreatedByHR)
@@ -191,7 +183,10 @@ namespace CampusPlacementManagement.API.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // JobOpening - JobTargetCollege (One-to-Many)
+
+            // ==========================================
+            // 13. JOB OPENING AND JOB TARGET COLLEGE (1:M)
+            // ==========================================
 
             modelBuilder.Entity<JobTargetCollege>()
                 .HasOne(jtc => jtc.JobOpening)
@@ -200,7 +195,10 @@ namespace CampusPlacementManagement.API.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // College - JobTargetCollege (One-to-Many)
+
+            // ==========================================
+            // 14. COLLEGE AND JOB TARGET COLLEGE (1:M)
+            // ==========================================
 
             modelBuilder.Entity<JobTargetCollege>()
                 .HasOne(jtc => jtc.College)
@@ -209,17 +207,16 @@ namespace CampusPlacementManagement.API.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Prevent duplicate College assignments for the same Job
 
+            // Unique Job and College combination
             modelBuilder.Entity<JobTargetCollege>()
-                .HasIndex(jtc => new
-                {
-                    jtc.JobId,
-                    jtc.CollegeId
-                })
+                .HasIndex(jtc => new { jtc.JobId, jtc.CollegeId })
                 .IsUnique();
 
-            // JobOpening - JobEligibleDepartment (1:M)
+
+            // ==========================================
+            // 15. JOB OPENING AND ELIGIBLE DEPARTMENT (1:M)
+            // ==========================================
 
             modelBuilder.Entity<JobEligibleDepartment>()
                 .HasOne(d => d.JobOpening)
@@ -228,7 +225,16 @@ namespace CampusPlacementManagement.API.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // JobOpening - JobEligibleGraduationYear (1:M)
+
+            // Unique Department per Job
+            modelBuilder.Entity<JobEligibleDepartment>()
+                .HasIndex(d => new { d.JobId, d.Department })
+                .IsUnique();
+
+
+            // ==========================================
+            // 16. JOB OPENING AND ELIGIBLE GRADUATION YEAR (1:M)
+            // ==========================================
 
             modelBuilder.Entity<JobEligibleGraduationYear>()
                 .HasOne(y => y.JobOpening)
@@ -237,14 +243,126 @@ namespace CampusPlacementManagement.API.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<JobEligibleDepartment>()
-                .HasIndex(d => new { d.JobId, d.Department })
-                .IsUnique();
 
+            // Unique Graduation Year per Job
             modelBuilder.Entity<JobEligibleGraduationYear>()
                 .HasIndex(y => new { y.JobId, y.GraduationYear })
                 .IsUnique();
 
+
+            // ==========================================
+            // 17. JOB OPENING AND JOB APPLICATION (1:M)
+            // ==========================================
+
+            modelBuilder.Entity<JobApplication>()
+                .HasOne(a => a.JobOpening)
+                .WithMany()
+                .HasForeignKey(a => a.JobId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // ==========================================
+            // 18. STUDENT AND JOB APPLICATION (1:M)
+            // ==========================================
+
+            modelBuilder.Entity<JobApplication>()
+                .HasOne(a => a.Student)
+                .WithMany()
+                .HasForeignKey(a => a.StudentId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // Prevent duplicate applications
+            modelBuilder.Entity<JobApplication>()
+                .HasIndex(a => new { a.StudentId, a.JobId })
+                .IsUnique();
+
+
+            // ==========================================
+            // 19. JOB OPENING AND RECRUITMENT DRIVE (1:M)
+            // ==========================================
+
+            modelBuilder.Entity<RecruitmentDrive>()
+                .HasOne(r => r.JobOpening)
+                .WithMany()
+                .HasForeignKey(r => r.JobId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // ==========================================
+            // 20. COLLEGE AND RECRUITMENT DRIVE (1:M)
+            // ==========================================
+
+            modelBuilder.Entity<RecruitmentDrive>()
+                .HasOne(r => r.College)
+                .WithMany()
+                .HasForeignKey(r => r.CollegeId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // ==========================================
+            // 21. JOB OPENING AND INTERVIEW ROUND (1:M)
+            // ==========================================
+
+            modelBuilder.Entity<InterviewRound>()
+                .HasOne(r => r.JobOpening)
+                .WithMany()
+                .HasForeignKey(r => r.JobId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // ==========================================
+            // 22. JOB APPLICATION AND INTERVIEW SCHEDULE (1:M)
+            // ==========================================
+
+            modelBuilder.Entity<InterviewSchedule>()
+                .HasOne(s => s.JobApplication)
+                .WithMany()
+                .HasForeignKey(s => s.ApplicationId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // ==========================================
+            // 23. INTERVIEW ROUND AND INTERVIEW SCHEDULE (1:M)
+            // ==========================================
+
+            modelBuilder.Entity<InterviewSchedule>()
+                .HasOne(s => s.InterviewRound)
+                .WithMany()
+                .HasForeignKey(s => s.InterviewRoundId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // ==========================================
+            // 24. JOB APPLICATION AND STATUS HISTORY (1:M)
+            // ==========================================
+
+            modelBuilder.Entity<ApplicationStatusHistory>()
+                .HasOne(h => h.JobApplication)
+                .WithMany()
+                .HasForeignKey(h => h.ApplicationId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // ==========================================
+            // 25. APPLICATION USER AND STATUS HISTORY (1:M)
+            // ==========================================
+
+            modelBuilder.Entity<ApplicationStatusHistory>()
+                .HasOne(h => h.UpdatedByUser)
+                .WithMany()
+                .HasForeignKey(h => h.UpdatedByUserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
+

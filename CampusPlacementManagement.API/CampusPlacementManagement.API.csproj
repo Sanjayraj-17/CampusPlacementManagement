@@ -33,7 +33,6 @@
     <Folder Include="DTOs\RecruitmentDrive\" />
     <Folder Include="DTOs\Student\" />
     <Folder Include="DTOs\PlacementOfficer\" />
-    <Folder Include="Enums\" />
     <Folder Include="Middleware\" />
     <Folder Include="Helpers\" />
     <Folder Include="Authorization\" />
