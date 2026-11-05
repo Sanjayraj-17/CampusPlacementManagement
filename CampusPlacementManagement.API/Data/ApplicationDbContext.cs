@@ -219,6 +219,31 @@ namespace CampusPlacementManagement.API.Data
                 })
                 .IsUnique();
 
+            // JobOpening - JobEligibleDepartment (1:M)
+
+            modelBuilder.Entity<JobEligibleDepartment>()
+                .HasOne(d => d.JobOpening)
+                .WithMany()
+                .HasForeignKey(d => d.JobId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // JobOpening - JobEligibleGraduationYear (1:M)
+
+            modelBuilder.Entity<JobEligibleGraduationYear>()
+                .HasOne(y => y.JobOpening)
+                .WithMany()
+                .HasForeignKey(y => y.JobId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<JobEligibleDepartment>()
+                .HasIndex(d => new { d.JobId, d.Department })
+                .IsUnique();
+
+            modelBuilder.Entity<JobEligibleGraduationYear>()
+                .HasIndex(y => new { y.JobId, y.GraduationYear })
+                .IsUnique();
 
         }
     }
