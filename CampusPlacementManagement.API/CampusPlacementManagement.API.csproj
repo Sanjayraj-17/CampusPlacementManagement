@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.14">
       <PrivateAssets>all</PrivateAssets>
@@ -20,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\" />
     <Folder Include="DTOs\Auth\" />
     <Folder Include="DTOs\College\" />
     <Folder Include="DTOs\Company\" />
@@ -30,8 +33,6 @@
     <Folder Include="DTOs\RecruitmentDrive\" />
     <Folder Include="DTOs\Student\" />
     <Folder Include="DTOs\PlacementOfficer\" />
-    <Folder Include="Models\" />
-    <Folder Include="Data\" />
     <Folder Include="Enums\" />
     <Folder Include="Middleware\" />
     <Folder Include="Helpers\" />
