@@ -24,5 +24,7 @@ namespace CampusPlacementManagement.API.Data
         public DbSet<CompanyHR> CompanyHRs { get; set; }
 
         public DbSet<Student> Students { get; set; }
+        public DbSet<JobOpening> JobOpenings { get; set; }
+
     }
 }
