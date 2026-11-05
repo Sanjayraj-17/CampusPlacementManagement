@@ -1,0 +1,52 @@
+
+# Build output
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache
+.vscode/
+
+# NuGet
+*.nupkg
+packages/
+
+# Application logs
+*.log
+logs/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+appsettings.*.local.json
+
+# User-specific settings
+*.rsuser
+*.sln.ide
+
+# Database files
+*.mdf
+*.ldf
+
+# Test results
+TestResults/
+coverage/
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
