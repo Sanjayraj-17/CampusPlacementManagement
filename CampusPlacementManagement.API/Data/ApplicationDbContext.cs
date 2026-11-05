@@ -140,6 +140,85 @@ namespace CampusPlacementManagement.API.Data
                 .HasIndex(s => new { s.CollegeId, s.RegisterNumber })
                 .IsUnique();
 
+            // ==========================================
+            // COMPANY RELATIONSHIPS
+            // ==========================================
+
+            // Company - CompanyHR (One-to-Many)
+            modelBuilder.Entity<CompanyHR>()
+                .HasOne(h => h.Company)
+                .WithMany()
+                .HasForeignKey(h => h.CompanyId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // CompanyHR - ApprovedBy ApplicationUser
+            modelBuilder.Entity<CompanyHR>()
+                .HasOne(h => h.ApprovedByUser)
+                .WithMany()
+                .HasForeignKey(h => h.ApprovedBy)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // CompanyHR - ApprovedBy ApplicationUser
+            modelBuilder.Entity<CompanyHR>()
+                .HasOne(h => h.ApprovedByUser)
+                .WithMany()
+                .HasForeignKey(h => h.ApprovedBy)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // PlacementOfficer - ApprovedBy ApplicationUser
+            modelBuilder.Entity<PlacementOfficer>()
+                .HasOne(p => p.ApprovedByUser)
+                .WithMany()
+                .HasForeignKey(p => p.ApprovedBy)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Company - JobOpening (One-to-Many)
+
+            modelBuilder.Entity<JobOpening>()
+                .HasOne(j => j.Company)
+                .WithMany()
+                .HasForeignKey(j => j.CompanyId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // CompanyHR - JobOpening (One-to-Many)
+
+            modelBuilder.Entity<JobOpening>()
+                .HasOne(j => j.CreatedByHR)
+                .WithMany()
+                .HasForeignKey(j => j.CreatedByHRId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // JobOpening - JobTargetCollege (One-to-Many)
+
+            modelBuilder.Entity<JobTargetCollege>()
+                .HasOne(jtc => jtc.JobOpening)
+                .WithMany()
+                .HasForeignKey(jtc => jtc.JobId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // College - JobTargetCollege (One-to-Many)
+
+            modelBuilder.Entity<JobTargetCollege>()
+                .HasOne(jtc => jtc.College)
+                .WithMany()
+                .HasForeignKey(jtc => jtc.CollegeId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Prevent duplicate College assignments for the same Job
+
+            modelBuilder.Entity<JobTargetCollege>()
+                .HasIndex(jtc => new
+                {
+                    jtc.JobId,
+                    jtc.CollegeId
+                })
+                .IsUnique();
+
 
         }
     }
