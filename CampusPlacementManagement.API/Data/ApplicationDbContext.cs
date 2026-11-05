@@ -80,6 +80,7 @@ namespace CampusPlacementManagement.API.Data
                 .HasIndex(c => c.CollegeCode)
                 .IsUnique();
 
+
             // ApplicationUser - PlacementOfficer (1:1)
             modelBuilder.Entity<PlacementOfficer>()
                 .HasOne(p => p.User)
@@ -105,6 +106,39 @@ namespace CampusPlacementManagement.API.Data
                 .HasForeignKey<Student>(s => s.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // College - PlacementOfficer (One-to-Many)
+
+            modelBuilder.Entity<PlacementOfficer>()
+                .HasOne(p => p.College)
+                .WithMany()
+                .HasForeignKey(p => p.CollegeId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // College - Student (One-to-Many)
+
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.College)
+                .WithMany()
+                .HasForeignKey(s => s.CollegeId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // PlacementOfficer - Student (One-to-Many)
+
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.PlacementOfficer)
+                .WithMany()
+                .HasForeignKey(s => s.PlacementOfficerId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Student - Unique RegisterNumber within College
+
+            modelBuilder.Entity<Student>()
+                .HasIndex(s => new { s.CollegeId, s.RegisterNumber })
+                .IsUnique();
 
 
         }
