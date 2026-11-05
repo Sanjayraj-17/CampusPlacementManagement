@@ -27,6 +27,7 @@ namespace CampusPlacementManagement.API.Data
         public DbSet<JobOpening> JobOpenings { get; set; }
         public DbSet<JobTargetCollege> JobTargetColleges { get; set; }
         public DbSet<JobApplication> JobApplications { get; set; }
+        public DbSet<RecruitmentDrive> RecruitmentDrives { get; set; }
 
     }
 }
