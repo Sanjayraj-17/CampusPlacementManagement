@@ -8,6 +8,7 @@ using System.Text;
 using CampusPlacementManagement.API.Services.Interfaces;
 using CampusPlacementManagement.API.Services.Implementations;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -77,12 +78,23 @@ builder.Services
 // JWT Service Registration
 builder.Services.AddScoped<IJwtService, JwtService>();
 
+// Authentication Service Registration
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+// Seed Identity Roles
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    await RoleSeeder.SeedRolesAsync(services);
+}
 
 if (app.Environment.IsDevelopment())
 {
