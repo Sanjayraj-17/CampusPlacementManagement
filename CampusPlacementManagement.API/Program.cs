@@ -5,8 +5,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using CampusPlacementManagement.API.Services.Interfaces;
+using CampusPlacementManagement.API.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
@@ -70,6 +73,9 @@ builder.Services
             ClockSkew = TimeSpan.FromMinutes(1)
         };
     });
+
+// JWT Service Registration
+builder.Services.AddScoped<IJwtService, JwtService>();
 
 
 
