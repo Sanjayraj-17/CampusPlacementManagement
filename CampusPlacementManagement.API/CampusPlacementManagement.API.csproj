@@ -2,8 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <!-- Run through the dotnet host instead of launching the generated apphost EXE. -->
+    <UseAppHost>false</UseAppHost>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>a8be9ccc-e0eb-4972-a65b-e57a023149c9</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

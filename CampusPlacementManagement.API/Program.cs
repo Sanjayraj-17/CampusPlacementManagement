@@ -86,16 +86,23 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
-
 var app = builder.Build();
 
-// Seed Identity Roles
+// Seed Identity Roles and Initial SuperAdmin
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
+    // First create the four Identity roles
     await RoleSeeder.SeedRolesAsync(services);
+
+    // Then create the initial SuperAdmin
+    await SuperAdminSeeder.SeedSuperAdminAsync(
+        services,
+        app.Configuration);
 }
+
+
 
 if (app.Environment.IsDevelopment())
 {
