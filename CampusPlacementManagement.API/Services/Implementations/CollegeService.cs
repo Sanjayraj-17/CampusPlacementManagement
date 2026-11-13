@@ -1,5 +1,4 @@
-﻿
-using CampusPlacementManagement.API.DTOs.College;
+﻿using CampusPlacementManagement.API.DTOs.College;
 using CampusPlacementManagement.API.Enums;
 using CampusPlacementManagement.API.Models;
 using CampusPlacementManagement.API.Repositories.Interfaces;
@@ -31,10 +30,11 @@ namespace CampusPlacementManagement.API.Services.Implementations
         // Create college
         public async Task<string> CreateAsync(CollegeRequestDto request)
         {
+            var collegeCode = request.CollegeCode.Trim().ToUpperInvariant();
+
             // Check duplicate College Code
             var existingCollege =
-                await _collegeRepository.GetByCodeAsync(
-                    request.CollegeCode.Trim());
+                await _collegeRepository.GetByCodeAsync(collegeCode);
 
             if (existingCollege != null)
             {
@@ -44,7 +44,7 @@ namespace CampusPlacementManagement.API.Services.Implementations
             var college = new College
             {
                 CollegeName = request.CollegeName.Trim(),
-                CollegeCode = request.CollegeCode.Trim().ToUpperInvariant(),
+                CollegeCode = collegeCode,
                 UniversityName = request.UniversityName?.Trim(),
                 OfficialEmail = request.OfficialEmail.Trim(),
                 PhoneNumber = request.PhoneNumber.Trim(),
@@ -104,7 +104,6 @@ namespace CampusPlacementManagement.API.Services.Implementations
         }
 
         // Delete college
-
         public async Task<string> DeleteAsync(int collegeId)
         {
             var college = await _collegeRepository.GetByIdAsync(collegeId);
@@ -125,5 +124,80 @@ namespace CampusPlacementManagement.API.Services.Implementations
             }
         }
 
+        // Approve college
+        public async Task<string> ApproveAsync(int collegeId)
+        {
+            var college = await _collegeRepository.GetByIdAsync(collegeId);
+
+            if (college == null)
+                return "College not found.";
+
+            if (college.Status == CollegeStatus.Approved)
+                return "College is already approved.";
+
+            college.Status = CollegeStatus.Approved;
+
+            _collegeRepository.Update(college);
+            await _collegeRepository.SaveChangesAsync();
+
+            return "College approved successfully.";
+        }
+
+        // Reject college
+        public async Task<string> RejectAsync(int collegeId)
+        {
+            var college = await _collegeRepository.GetByIdAsync(collegeId);
+
+            if (college == null)
+                return "College not found.";
+
+            if (college.Status == CollegeStatus.Rejected)
+                return "College is already rejected.";
+
+            college.Status = CollegeStatus.Rejected;
+
+            _collegeRepository.Update(college);
+            await _collegeRepository.SaveChangesAsync();
+
+            return "College rejected successfully.";
+        }
+
+        // Suspend college
+        public async Task<string> SuspendAsync(int collegeId)
+        {
+            var college = await _collegeRepository.GetByIdAsync(collegeId);
+
+            if (college == null)
+                return "College not found.";
+
+            if (college.Status == CollegeStatus.Suspended)
+                return "College is already suspended.";
+
+            college.Status = CollegeStatus.Suspended;
+
+            _collegeRepository.Update(college);
+            await _collegeRepository.SaveChangesAsync();
+
+            return "College suspended successfully.";
+        }
+
+        // Reactivate college
+        public async Task<string> ReactivateAsync(int collegeId)
+        {
+            var college = await _collegeRepository.GetByIdAsync(collegeId);
+
+            if (college == null)
+                return "College not found.";
+
+            if (college.Status == CollegeStatus.Approved)
+                return "College is already active.";
+
+            college.Status = CollegeStatus.Approved;
+
+            _collegeRepository.Update(college);
+            await _collegeRepository.SaveChangesAsync();
+
+            return "College reactivated successfully.";
+        }
     }
 }

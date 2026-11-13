@@ -1,12 +1,14 @@
 using CampusPlacementManagement.API.Data;
 using CampusPlacementManagement.API.Models;
+using CampusPlacementManagement.API.Repositories.Implementations;
+using CampusPlacementManagement.API.Repositories.Interfaces;
+using CampusPlacementManagement.API.Services.Implementations;
+using CampusPlacementManagement.API.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using CampusPlacementManagement.API.Services.Interfaces;
-using CampusPlacementManagement.API.Services.Implementations;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -80,6 +82,12 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 
 // Authentication Service Registration
 builder.Services.AddScoped<IAuthService, AuthService>();
+
+// College Repository Registration
+builder.Services.AddScoped<ICollegeRepository, CollegeRepository>();
+
+// College Service Registration
+builder.Services.AddScoped<ICollegeService, CollegeService>();
 
 
 

@@ -26,9 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="DTOs\Auth\" />
-    <Folder Include="DTOs\College\" />
     <Folder Include="DTOs\Company\" />
     <Folder Include="DTOs\CompanyHR\" />
     <Folder Include="DTOs\Job\" />
@@ -40,8 +38,6 @@
     <Folder Include="Middleware\" />
     <Folder Include="Helpers\" />
     <Folder Include="Authorization\" />
-    <Folder Include="Repositories\Intefaces\" />
-    <Folder Include="Repositories\Implementations\" />
   </ItemGroup>
 
 </Project>

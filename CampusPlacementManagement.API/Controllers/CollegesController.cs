@@ -1,5 +1,4 @@
-﻿
-using CampusPlacementManagement.API.DTOs.College;
+﻿using CampusPlacementManagement.API.DTOs.College;
 using CampusPlacementManagement.API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -79,6 +78,66 @@ namespace CampusPlacementManagement.API.Controllers
 
             if (result.Contains("cannot be deleted"))
                 return Conflict(new { message = result });
+
+            return Ok(new { message = result });
+        }
+
+        // PUT: api/colleges/1/approve
+        [HttpPut("{id:int}/approve")]
+        public async Task<IActionResult> Approve(int id)
+        {
+            var result = await _collegeService.ApproveAsync(id);
+
+            if (result == "College not found.")
+                return NotFound(new { message = result });
+
+            if (result.Contains("already"))
+                return BadRequest(new { message = result });
+
+            return Ok(new { message = result });
+        }
+
+        // PUT: api/colleges/1/reject
+        [HttpPut("{id:int}/reject")]
+        public async Task<IActionResult> Reject(int id)
+        {
+            var result = await _collegeService.RejectAsync(id);
+
+            if (result == "College not found.")
+                return NotFound(new { message = result });
+
+            if (result.Contains("already"))
+                return BadRequest(new { message = result });
+
+            return Ok(new { message = result });
+        }
+
+        // PUT: api/colleges/1/suspend
+        [HttpPut("{id:int}/suspend")]
+        public async Task<IActionResult> Suspend(int id)
+        {
+            var result = await _collegeService.SuspendAsync(id);
+
+            if (result == "College not found.")
+                return NotFound(new { message = result });
+
+            if (result.Contains("already"))
+                return BadRequest(new { message = result });
+
+            return Ok(new { message = result });
+        }
+
+        // PUT: api/colleges/1/reactivate
+        [HttpPut("{id:int}/reactivate")]
+        public async Task<IActionResult> Reactivate(int id)
+        {
+            var result = await _collegeService.ReactivateAsync(id);
+
+            if (result == "College not found.")
+                return NotFound(new { message = result });
+
+            if (result.Contains("already"))
+                return BadRequest(new { message = result });
 
             return Ok(new { message = result });
         }
