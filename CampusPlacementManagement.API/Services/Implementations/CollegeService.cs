@@ -104,20 +104,26 @@ namespace CampusPlacementManagement.API.Services.Implementations
         }
 
         // Delete college
+
         public async Task<string> DeleteAsync(int collegeId)
         {
-            var college =
-                await _collegeRepository.GetByIdAsync(collegeId);
+            var college = await _collegeRepository.GetByIdAsync(collegeId);
 
             if (college == null)
-            {
                 return "College not found.";
+
+            try
+            {
+                _collegeRepository.Delete(college);
+                await _collegeRepository.SaveChangesAsync();
+
+                return "College deleted successfully.";
             }
-
-            _collegeRepository.Delete(college);
-            await _collegeRepository.SaveChangesAsync();
-
-            return "College deleted successfully.";
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+            {
+                return "College cannot be deleted because related records exist. Deactivate it instead.";
+            }
         }
+
     }
 }
