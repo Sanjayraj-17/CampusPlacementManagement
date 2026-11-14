@@ -113,6 +113,12 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 // Student Service Registration
 builder.Services.AddScoped<IStudentService, StudentService>();
 
+// Job Opening Repository Registration
+builder.Services.AddScoped<IJobOpeningRepository, JobOpeningRepository>();
+
+// Job Opening Service Registration
+builder.Services.AddScoped<IJobOpeningService, JobOpeningService>();
+
 
 
 builder.Services.AddControllers();
