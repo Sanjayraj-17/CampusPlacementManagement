@@ -119,6 +119,12 @@ builder.Services.AddScoped<IJobOpeningRepository, JobOpeningRepository>();
 // Job Opening Service Registration
 builder.Services.AddScoped<IJobOpeningService, JobOpeningService>();
 
+// Job Application Repository Registration
+builder.Services.AddScoped<IJobApplicationRepository, JobApplicationRepository>();
+
+// Job Application Service Registration
+builder.Services.AddScoped<IJobApplicationService, JobApplicationService>();
+
 
 
 builder.Services.AddControllers();
