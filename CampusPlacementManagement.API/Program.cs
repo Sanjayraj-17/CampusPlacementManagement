@@ -89,6 +89,12 @@ builder.Services.AddScoped<ICollegeRepository, CollegeRepository>();
 // College Service Registration
 builder.Services.AddScoped<ICollegeService, CollegeService>();
 
+// Placement Officer Repository Registration
+builder.Services.AddScoped<IPlacementOfficerRepository, PlacementOfficerRepository>();
+
+// Placement Officer Service Registration
+builder.Services.AddScoped<IPlacementOfficerService, PlacementOfficerService>();
+
 
 
 builder.Services.AddControllers();
