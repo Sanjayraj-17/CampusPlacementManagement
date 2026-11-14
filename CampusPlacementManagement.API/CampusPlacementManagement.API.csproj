@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <Folder Include="DTOs\Auth\" />
-    <Folder Include="DTOs\CompanyHR\" />
     <Folder Include="DTOs\Job\" />
     <Folder Include="DTOs\Application\" />
     <Folder Include="DTOs\Interview\" />

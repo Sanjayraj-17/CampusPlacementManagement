@@ -101,6 +101,12 @@ builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 // Company Service Registration
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 
+// Company HR Repository Registration
+builder.Services.AddScoped<ICompanyHRRepository, CompanyHRRepository>();
+
+// Company HR Service Registration
+builder.Services.AddScoped<ICompanyHRService, CompanyHRService>();
+
 
 
 builder.Services.AddControllers();
