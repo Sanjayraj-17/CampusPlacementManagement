@@ -95,6 +95,12 @@ builder.Services.AddScoped<IPlacementOfficerRepository, PlacementOfficerReposito
 // Placement Officer Service Registration
 builder.Services.AddScoped<IPlacementOfficerService, PlacementOfficerService>();
 
+// Company Repository Registration
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+
+// Company Service Registration
+builder.Services.AddScoped<ICompanyService, CompanyService>();
+
 
 
 builder.Services.AddControllers();
