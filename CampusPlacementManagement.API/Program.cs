@@ -131,6 +131,12 @@ builder.Services.AddScoped<IRecruitmentDriveRepository, RecruitmentDriveReposito
 // Recruitment Drive Service Registration
 builder.Services.AddScoped<IRecruitmentDriveService, RecruitmentDriveService>();
 
+// Interview Repository Registration
+builder.Services.AddScoped<IInterviewRepository, InterviewRepository>();
+
+// Interview Service Registration
+builder.Services.AddScoped<IInterviewService, InterviewService>();
+
 
 
 builder.Services.AddControllers();
