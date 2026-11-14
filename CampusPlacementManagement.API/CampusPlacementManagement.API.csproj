@@ -28,7 +28,6 @@
   <ItemGroup>
     <Folder Include="DTOs\Auth\" />
     <Folder Include="DTOs\Interview\" />
-    <Folder Include="DTOs\RecruitmentDrive\" />
     <Folder Include="Middleware\" />
     <Folder Include="Helpers\" />
     <Folder Include="Authorization\" />

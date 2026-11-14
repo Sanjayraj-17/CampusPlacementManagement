@@ -125,6 +125,12 @@ builder.Services.AddScoped<IJobApplicationRepository, JobApplicationRepository>(
 // Job Application Service Registration
 builder.Services.AddScoped<IJobApplicationService, JobApplicationService>();
 
+// Recruitment Drive Repository Registration
+builder.Services.AddScoped<IRecruitmentDriveRepository, RecruitmentDriveRepository>();
+
+// Recruitment Drive Service Registration
+builder.Services.AddScoped<IRecruitmentDriveService, RecruitmentDriveService>();
+
 
 
 builder.Services.AddControllers();
